@@ -25,9 +25,11 @@ namespace IntresseKlubbenAPI.Model
             //seed personer
             modelBuilder.Entity<Personer>().
                 HasData(new Personer
-                {Id = 1,Name = "Anas",
+                {
+                    Id = 1,
+                    Name = "Anas",
                     Phone=07055555,
-                    Email="Anas@qlok.com" 
+                    Email="Anas@qlok.com",  
                 });
             modelBuilder.Entity<Personer>().
                 HasData(new Personer
@@ -52,6 +54,7 @@ namespace IntresseKlubbenAPI.Model
                 ID=1,
                 Title = "Sportfiske",
                 Description="Fiska fiskar i havet.",
+                PersId=1
 
             });
             modelBuilder.Entity<Interest>().
@@ -60,47 +63,54 @@ namespace IntresseKlubbenAPI.Model
                 ID = 2,
                 Title = "Fotboll",
                 Description = "Sparka bollar i mål.",
+                    PersId = 1
 
-            });
+                });
             modelBuilder.Entity<Interest>().
                 HasData(new Interest
             {
                 ID = 3,
                 Title = "Styrketräning",
                 Description = "Lyfta skrot i gymmet.",
+                    PersId = 2
 
-            });
+                });
             modelBuilder.Entity<Interest>().
                 HasData(new Interest
             {
                 ID = 4,
                 Title = "Youtube",
                 Description = "Kolla på katter på youtube",
+                    PersId = 3
 
-            });
+                });
             //seed Links
             modelBuilder.Entity<Links>().HasData(new Links 
             { 
                 ID=1,
                 strLink="www.nånting.com",
-                PersID=1
+                PersID=1,
+                InterestID=2
             });
             modelBuilder.Entity<Links>().HasData(new Links
             {
                 ID = 2,
                 strLink = "www.nånting2.com",
+                InterestID = 1,
                 PersID = 1
             });
             modelBuilder.Entity<Links>().HasData(new Links
             {
                 ID = 3,
                 strLink = "www.nånting3.com",
+                InterestID = 2,
                 PersID = 2
             });
             modelBuilder.Entity<Links>().HasData(new Links
             {
                 ID = 4,
                 strLink = "www.nånting4.com",
+                InterestID = 3,
                 PersID = 3
             });
         }

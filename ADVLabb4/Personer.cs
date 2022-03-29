@@ -9,12 +9,10 @@ namespace ADVLabb4.Models
     {
         [Key]
         public int Id { get; set; }
-        [Required]
         public string Name { get; set; }
         public int Phone { get; set; }
         public string Email { get; set; }
-        //one to many relationship
-        public ICollection<Interest> Interest { get; set; }
+   
 
     }
 }

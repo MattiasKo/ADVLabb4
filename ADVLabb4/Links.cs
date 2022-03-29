@@ -11,6 +11,7 @@ namespace ADVLabb4.Models
         public int ID { get; set; }
         public string strLink { get; set; }
         public int PersID { get; set; }
+        public int InterestID { get; set; }
 
     }
 }

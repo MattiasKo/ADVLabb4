@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace IntresseKlubbenAPI.Services
 {
-    public class LinksRepository : IIntresseKlubben<Links>
+    public class LinksRepository : IPerLinksInterest
     {
         private AppDbContext _appContext;
         public LinksRepository(AppDbContext appContext)
@@ -40,7 +40,8 @@ namespace IntresseKlubbenAPI.Services
             return await _appContext.Linkss.ToListAsync();
         }
 
-        public async Task<Links> GetSingel(int id)
+       
+            public async Task<Links> GetSingel(int id)
         {
             return await _appContext.Linkss.
                 FirstOrDefaultAsync(p => p.ID == id);
@@ -60,5 +61,36 @@ namespace IntresseKlubbenAPI.Services
             }
             return null;
         }
+        public async Task<IEnumerable<Links>> GetAllMisc(int id)
+        {
+            var result = await _appContext.Personers.FirstOrDefaultAsync(p => p.Id == id);
+            if (result != null)
+            {
+                var result2 = await _appContext.Personers.Join(_appContext.Linkss,
+                Per => Per.Id,
+                Lin => Lin.PersID,
+                (Per, Lin) => new { Per, Lin }).Where(p => p.Lin.PersID== id).Select(i => i.Lin).ToListAsync();
+
+                return result2;
+            }
+            return null;
+        }
+        public async Task<Links> UpdateLinksForSpesificPerson(int id,  int idIntre, Links Lid)
+        {
+            var result = await _appContext.Personers.FirstOrDefaultAsync(p => p.Id == id);
+            var result2 = await _appContext.Interests.FirstOrDefaultAsync(i => i.ID == idIntre);
+            if (result != null && result2 != null)
+            {
+                var newLink = await _appContext.Linkss.AddAsync(new Links 
+                {PersID = id, 
+                InterestID = idIntre,
+                strLink = Lid.strLink });
+
+                await _appContext.SaveChangesAsync();
+                return newLink.Entity;
+            }
+            return null;
+        }
+
     }
 }

@@ -40,6 +40,11 @@ namespace IntresseKlubbenAPI.Services
             return await _appContext.Personers.ToListAsync();
         }
 
+        public Task<IEnumerable<Personer>> GetAllMisc(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<Personer> GetSingel(int id)
         {
             return await _appContext.Personers.
@@ -60,5 +65,7 @@ namespace IntresseKlubbenAPI.Services
             }
             return null;
         }
+      
+
     }
 }

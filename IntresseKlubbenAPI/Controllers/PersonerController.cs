@@ -14,6 +14,7 @@ namespace IntresseKlubbenAPI.Controllers
     public class PersonerController : ControllerBase
     {
         private IIntresseKlubben<Personer> _intresseKlubben;
+
         public PersonerController(IIntresseKlubben<Personer> intresseklubben)
         {
             _intresseKlubben = intresseklubben;
@@ -33,7 +34,7 @@ namespace IntresseKlubbenAPI.Controllers
             }
             
         }
-        [HttpGet("{id}")]
+        [HttpGet("{id:int}")]
         public async Task<ActionResult<Personer>> GetPerson(int id)
         {
             try
@@ -110,6 +111,8 @@ namespace IntresseKlubbenAPI.Controllers
                                             "Error to update to database.");
             }
         }
+      
+
 
     }
 }

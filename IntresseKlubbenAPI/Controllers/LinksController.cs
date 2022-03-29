@@ -33,7 +33,7 @@ namespace IntresseKlubbenAPI.Controllers
             }
             
         }
-        [HttpGet("{id}")]
+        [HttpGet("{id:int}")]
         public async Task<ActionResult<Links>> GetPerson(int id)
         {
             try
@@ -51,6 +51,7 @@ namespace IntresseKlubbenAPI.Controllers
                     "Error to recive single data from database.");
             }
         }
+        
         [HttpPost]
         public async Task<ActionResult<Links>> CreateNewPerson(Links newPer)
         {
@@ -110,6 +111,43 @@ namespace IntresseKlubbenAPI.Controllers
                                             "Error to update to database.");
             }
         }
+        [HttpGet("Links{id}")]
+        public async Task<ActionResult> AllPerLinks(int id)
+        {
+            try
+            {
+                var result = await _intresseKlubben.GetSingel(id);
+                if (result == null)
+                {
+                    return NotFound();
+                }
+                var result2 = await _intresseKlubben.GetAllMisc(id);
+                return Ok(result2);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "Error to recive single data from database.");
+            }
+        }
+        [HttpPost("LIPerson-{id}-{IntreId}")]
+        public async Task<ActionResult<Links>> UpdateLinksForSpesificPerson(int id, int IntreId, Links NewLink)
+        {
+            try
+            {
+                if (NewLink == null)
+                {
+                    return BadRequest("Doesnt work.");
+                }
+                var createdLink = await _intresseKlubben.Add(NewLink);
+                return CreatedAtAction(nameof(UpdateLinksForSpesificPerson), new { id = createdLink.PersID , IntreId = createdLink.InterestID, strLink= createdLink.strLink }, createdLink);
+            }
+            catch (Exception)
+            {
 
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                                            "Error to update to database.");
+            }
+        }
     }
 }

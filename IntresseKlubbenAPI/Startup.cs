@@ -29,6 +29,8 @@ namespace IntresseKlubbenAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddControllers().AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling
+            = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddControllers();
             //entity framework sql provider
             services.AddDbContext<AppDbContext>(option => 
@@ -37,6 +39,7 @@ namespace IntresseKlubbenAPI
             services.AddScoped<IIntresseKlubben<Personer>, PersonRepository>();
             services.AddScoped<IIntresseKlubben<Links>, LinksRepository>();
             services.AddScoped<IIntresseKlubben<Interest>, InterestsRepository>();
+            services.AddScoped<IPerLinksInterest, LinksRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

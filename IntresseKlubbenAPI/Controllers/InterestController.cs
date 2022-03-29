@@ -18,6 +18,7 @@ namespace IntresseKlubbenAPI.Controllers
         {
             _intresseKlubben = intresseklubben;
         }
+  
         [HttpGet]
         public async Task<IActionResult> GetAllIntresse()
         {
@@ -30,10 +31,9 @@ namespace IntresseKlubbenAPI.Controllers
 
                 return StatusCode(StatusCodes.Status500InternalServerError,
                     "Error to recive data from database.");
-            }
-            
+            }     
         }
-        [HttpGet("{id}")]
+        [HttpGet("{id:int}")]
         public async Task<ActionResult<Interest>> GetPerson(int id)
         {
             try
@@ -51,6 +51,9 @@ namespace IntresseKlubbenAPI.Controllers
                     "Error to recive single data from database.");
             }
         }
+   
+   
+            
         [HttpPost]
         public async Task<ActionResult<Interest>> CreateNewPerson(Interest newPer)
         {
@@ -92,7 +95,7 @@ namespace IntresseKlubbenAPI.Controllers
         {
             try
             {
-                if(id != Pers.ID)
+                if(id == null)
                 {
                     return BadRequest($"Interest id {id} doesnt exist");
                 }
@@ -110,6 +113,28 @@ namespace IntresseKlubbenAPI.Controllers
                                             "Error to update to database.");
             }
         }
+        [HttpGet("Person{id}")]
+          public async Task<ActionResult> AllPInterests(int id)
+        {
+            try
+            {
+                var result2 = await _intresseKlubben.GetAllMisc(id);
+                //var result = await _intresseKlubben.GetSingel(id);
+                if (result2 == null)
+                {
+                    return NotFound();
+                }
+                
+                return Ok(result2);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "Error to recive single data from database.");
+            }
+        }
+
+
 
     }
 }

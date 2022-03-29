@@ -12,5 +12,8 @@ namespace IntresseKlubbenAPI.Services
         Task<T> Add(T newEntity);
         Task<T> Update(T Entity);
         Task<T> Delete(int id);
+        Task<IEnumerable<T>> GetAllMisc(int id);
+
+
     }
 }

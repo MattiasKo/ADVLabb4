@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace ADVLabb4.Models
 {
@@ -12,6 +13,6 @@ namespace ADVLabb4.Models
         public string Title { get; set; }
         public string Description { get; set; }
         public int PersId { get; set; }
-        public ICollection<Links> Links { get; set; }
+
     }
 }
